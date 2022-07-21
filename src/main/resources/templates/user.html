@@ -1,11 +1,46 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8"/>
+    <title>Пользователь</title>
+    <style>
+        table th, table td, form {
+            padding: 10px 5px;
+            font-family: sans-serif;
+            font-size: 14px;
+            border-style: solid;
+            border-width: 1px;
+            background-color: ivory;
+        }
+        button {
+            padding: 5px;
+            background: gold;
+        }
+    </style>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
-
-
+<h1>Пользователь</h1>
+<table th:border="1">
+    <tr>
+        <th th:width="50">UserId</th>
+        <th th:width="120">Имя</th>
+        <th th:width="120">Фамилия</th>
+        <th th:width="120">Логин</th>
+        <th th:width="120">Пароль</th>
+        <th th:width="120">Роли</th>
+    </tr>
+    <td th:utext="${user.id}">UserId</td>
+    <td th:utext="${user.name}">Name</td>
+    <td th:utext="${user.surname}">Surname</td>
+    <td th:utext="${user.login}">login</td>
+    <td th:utext="${user.password}">password</td>
+    <td>
+        <div th:each="role : ${user.getRoles()}" th:text="${role.name}">Role>
+        </div>
+    </td>
+</table>
+<br>
+<button onclick="window.location.href = '/admin';">Таблица пользователей</button>
+<p > <a href="/logout"> Выйти </a> </p>
 </body>
 </html>

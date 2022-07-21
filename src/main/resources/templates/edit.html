@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Редактор пользователя</title>
+    <style>
+        td {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            padding: 10px 5px;
+            border-style: solid;
+            border-width: 1px;
+            overflow: hidden;
+            word-break: normal;
+            border-color: #ccc;
+            color: #333;
+            background-color: ivory;
+        }
+        .buttonEdit {
+            background: gold;
+            position: relative;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+        div {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #fd3434;
+        }
+    </style>
+</head>
+<body>
+<h1>Редактор пользователя</h1>
+<form action="#" th:method="PATCH" th:action="@{/admin/edit}" th:object="${user}">
+    <table>
+        <tr>
+            <td>
+                <label for="id">UserId</label>
+                <input readonly type="number" th:field="*{id}" id="id" placeholder="UserId">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="name">Введите имя</label>
+                <input type="text" th:field="*{name}" id="name" required/>
+                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="surname">Введите фамилию</label>
+                <input type="text" th:field="*{surname}" id="surname"/>
+                <div th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">surname error</div>
+            </td>
+        </tr>
+        <tr>
+        <td>
+            <label for="login">Введите login</label>
+            <input type="text" th:field="*{login}" id="login"/>
+            <div th:if="${#fields.hasErrors('login')}" th:errors="*{login}">login error</div>
+        </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="password">Введите пароль</label>
+                <input type="text" th:field="*{password}" id="password"/>
+                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="roles">Роли:</label>
+                <input type="checkbox"
+                       th:field="*{roles}" id="roles" name="roles"
+                       th:each="role : ${roles}"
+                       th:text="${role.name}"
+                       th:value="${role.id}"/>
+            </td>
+        </tr>
+        <br>
+        <tr>
+            <td>
+                <input type="submit" class="buttonEdit" value="Сохранить"/>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
