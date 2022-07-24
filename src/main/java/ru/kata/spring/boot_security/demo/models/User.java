@@ -83,5 +83,14 @@ public class User implements UserDetails {
     public Set<Role> getRoles() {
         return roles;
     }
+
+    public String getStringRole() {
+        String stringRole = "";
+        for (Role role: getRoles()) {
+            stringRole = stringRole + " " + role.getName();
+        }
+
+        return stringRole;
+    }
 }
 

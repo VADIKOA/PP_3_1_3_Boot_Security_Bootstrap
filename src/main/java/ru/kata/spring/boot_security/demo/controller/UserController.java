@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,8 +22,11 @@ public class UserController {
     }
 
     @GetMapping("/admin")
-    public String users(Model model) {
+    public String users(Principal principal, Model model) {
         model.addAttribute("users", userService.findAll());
+        model.addAttribute("user", userService.findByUser(principal.getName()));
+        model.addAttribute("roles", roleService.getAllRoles());
+        model.addAttribute("new_user", new User());
         return "admin";
     }
 
@@ -59,7 +61,7 @@ public class UserController {
     }
 
     @PostMapping("/admin/edit")
-    public String update(@ModelAttribute("user") User user, BindingResult bindingResult) {
+    public String update(@ModelAttribute("userss") User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "edit";
         } else {
@@ -71,7 +73,7 @@ public class UserController {
     @PostMapping("/admin/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
         userService.deleteUser(id);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/user")

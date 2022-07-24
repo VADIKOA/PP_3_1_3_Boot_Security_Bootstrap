@@ -2,45 +2,74 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <title>Пользователь</title>
     <style>
-        table th, table td, form {
-            padding: 10px 5px;
-            font-family: sans-serif;
-            font-size: 14px;
-            border-style: solid;
-            border-width: 1px;
-            background-color: ivory;
+        body{
+            display: flex;
+            flex-direction: column;
+            height:100vh;
+            margin: 0;
+            padding: 0;
+            background-color: yellow;
         }
-        button {
-            padding: 5px;
-            background: gold;
+
+        .container-fluid{
+            flex: 1;
         }
     </style>
 </head>
 <body>
-<h1>Пользователь</h1>
-<table th:border="1">
-    <tr>
-        <th th:width="50">UserId</th>
-        <th th:width="120">Имя</th>
-        <th th:width="120">Фамилия</th>
-        <th th:width="120">Логин</th>
-        <th th:width="120">Пароль</th>
-        <th th:width="120">Роли</th>
-    </tr>
-    <td th:utext="${user.id}">UserId</td>
-    <td th:utext="${user.name}">Name</td>
-    <td th:utext="${user.surname}">Surname</td>
-    <td th:utext="${user.login}">login</td>
-    <td th:utext="${user.password}">password</td>
-    <td>
-        <div th:each="role : ${user.getRoles()}" th:text="${role.name}">Role>
+    <div class="container-fluid d-flex flex-column">
+        <div class="row bg-dark p-2">
+            <div class="col text-white" th:inline="text" >
+                <b>[[${user.login}]]</b> with roles: [[${user.getStringRole()}]]
+            </div>
+            <div class="col text-right">
+            <a href="/logout" class="text-secondary"> Logout </a>
+            </div>
         </div>
-    </td>
-</table>
-<br>
-<button onclick="window.location.href = '/admin';">Таблица пользователей</button>
-<p > <a href="/logout"> Выйти </a> </p>
+        <div class="row h-100 ">
+            <div class="col-2 bg-white h-100 pr-0 pl-0">
+                    <button type="button" class="btn btn-lg btn-primary btn-block text-left mt-3 w-100">User</button>
+            </div>
+            <div class="col bg-light h-100">
+                <h1 class="mt-3">User information-page</h1>
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th><h5>About user</h5></th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        <tr>
+                            <th>
+                                <table class="table bg-white">
+                                    <thead>
+                                        <tr>
+                                            <th th:width="50">UserId</th>
+                                            <th th:width="120">First Name</th>
+                                            <th th:width="120">Last Name</th>
+                                            <th th:width="120">Email</th>
+                                            <th th:width="150">Role</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-light">
+                                        <td th:utext="${user.id}">UserId</td>
+                                        <td th:utext="${user.name}">Name</td>
+                                        <td th:utext="${user.surname}">Surname</td>
+                                        <td th:utext="${user.login}">login</td>
+                                        <td th:utext="${user.getStringRole()}">role</td>
+                                    </tbody>
+                                </table>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
