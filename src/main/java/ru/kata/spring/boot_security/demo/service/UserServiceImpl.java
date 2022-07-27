@@ -53,21 +53,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUser(username);
+
         if (user == null) {
             throw new UsernameNotFoundException(String.format("Пользователя с логином '%s' не существует", username));
         }
 
-        List<GrantedAuthority> grantedAuthoritySet = new ArrayList<>();
-        for (Role role: user.getRoles()) {
-            grantedAuthoritySet.add(new SimpleGrantedAuthority(role.getName()));
-        }
-
-        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword()
-                , grantedAuthoritySet);
+        return user;
     }
-
-//    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-//        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName()))
-//                .collect(Collectors.toList());
-//    }
 }
